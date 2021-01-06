@@ -1,0 +1,14 @@
+{
+    "Beats" : {
+        "algorithm02" : {
+            "tracks" : 20,
+            "repeats" : 6
+        }
+    },
+    "Globals" : {
+        "sequence" : [
+            "Beats"
+        ],
+        "destination" : "/Users/jeremy/Tracks"
+    }
+}
