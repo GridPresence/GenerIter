@@ -1,11 +1,11 @@
 GenerIter.app package
-====================
+=====================
 
 Submodules
 ----------
 
 GenerIter.app.clibase module
----------------------------
+----------------------------
 
 .. automodule:: GenerIter.app.clibase
    :members:
@@ -13,7 +13,7 @@ GenerIter.app.clibase module
    :show-inheritance:
 
 GenerIter.app.generator module
------------------------------
+------------------------------
 
 .. automodule:: GenerIter.app.generator
    :members:
@@ -21,7 +21,7 @@ GenerIter.app.generator module
    :show-inheritance:
 
 GenerIter.app.inventory module
------------------------------
+------------------------------
 
 .. automodule:: GenerIter.app.inventory
    :members:

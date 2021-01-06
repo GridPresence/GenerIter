@@ -8,9 +8,9 @@ import os
 import math
 import random
 from pydub import AudioSegment
-from pyrobodj.selector import Selector
-from pyrobodj.source import WavSource
-from pyrobodj.util import debug, jStr, mkdir_p
+from GenerIter.selector import Selector
+from GenerIter.source import WavSource
+from GenerIter.util import debug, jStr, mkdir_p
 
 class Process():
     SUPPORTED_FORMATS = ["wav", "mp3", "flac"]

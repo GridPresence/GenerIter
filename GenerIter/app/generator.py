@@ -8,12 +8,12 @@ Copyright 2020 Thomas Jackson Park & Jeremy Pavier
 import os
 import argparse
 
-from GererIter.app.clibase import CLIBase
-from GererIter.selector import Selector
-from GererIter.config import Config
-from GererIter.factory import ProcessorFactory
-import GererIter.excepts as gix
-from GererIter.util import debug, localTimestamp
+from GenerIter.app.clibase import CLIBase
+from GenerIter.selector import Selector
+from GenerIter.config import Config
+from GenerIter.factory import ProcessorFactory
+import GenerIter.excepts as gix
+from GenerIter.util import debug, localTimestamp
 
 class Generator(CLIBase):
 

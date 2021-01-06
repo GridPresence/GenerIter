@@ -1,5 +1,5 @@
 GenerIter package
-================
+=================
 
 Subpackages
 -----------
@@ -13,32 +13,16 @@ Subpackages
 Submodules
 ----------
 
-GenerIter.category module
-------------------------
-
-.. automodule:: GenerIter.category
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 GenerIter.config module
-----------------------
+-----------------------
 
 .. automodule:: GenerIter.config
    :members:
    :undoc-members:
    :show-inheritance:
 
-GenerIter.content module
------------------------
-
-.. automodule:: GenerIter.content
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 GenerIter.excepts module
------------------------
+------------------------
 
 .. automodule:: GenerIter.excepts
    :members:
@@ -46,15 +30,23 @@ GenerIter.excepts module
    :show-inheritance:
 
 GenerIter.factory module
------------------------
+------------------------
 
 .. automodule:: GenerIter.factory
    :members:
    :undoc-members:
    :show-inheritance:
 
-GenerIter.selector module
+GenerIter.process module
 ------------------------
+
+.. automodule:: GenerIter.process
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GenerIter.selector module
+-------------------------
 
 .. automodule:: GenerIter.selector
    :members:
@@ -62,7 +54,7 @@ GenerIter.selector module
    :show-inheritance:
 
 GenerIter.source module
-----------------------
+-----------------------
 
 .. automodule:: GenerIter.source
    :members:
@@ -70,7 +62,7 @@ GenerIter.source module
    :show-inheritance:
 
 GenerIter.util module
---------------------
+---------------------
 
 .. automodule:: GenerIter.util
    :members:
