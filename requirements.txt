@@ -1,0 +1,5 @@
+pydub
+pytest
+sphinx
+sphinx-rtd-theme
+
