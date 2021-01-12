@@ -8,6 +8,7 @@ import os
 import string
 import random
 import json
+from pathlib import Path
 import GenerIter.excepts as robox
 from GenerIter.source import WavSource
 from GenerIter.config import Config
@@ -122,28 +123,26 @@ class Selector():
            # Search a directory tree
            selector.search(spath=pathstring)
 
-
         """
         if spath is not None:
-            #debug(spath)
-            for subdir, dirs, fyles in os.walk(spath):
-                #debug((subdir, dirs, fyles))
-                for fyle in fyles:
-                    #debug(fyle)
-                    filepath = "{0}{1}{2}".format(subdir,
-                                                  os.sep,
-                                                  fyle)
-                    #debug(filepath)
-                    # Attempt to add this item into the current configuration
-                    try:
-                        # Is it a valid WavSource?
-                        src = WavSource(dpath=filepath, dexist=True)
-                    except Exception as inst:
-                        debug(filepath)
-                        #debug_except(inst)
-                        debug("skipping ...")
-                        src = None # The insert will skip this
-                    self.insert(source=src, include=True)
+            # Let's use the object-oriented filesystem abstraction
+            sdir = Path(spath)
+            # Recursively walk the directory and subdirectories
+            fyles = list(sdir.rglob('*.*'))
+            for fyle in fyles:
+                # Ensure the filepath is absolute
+                filepath = str(fyle.resolve())
+                #debug(filepath)
+                # Attempt to add this item into the current configuration
+                try:
+                    # Is it a valid WavSource?
+                    src = WavSource(dpath=filepath, dexist=True)
+                except Exception as inst:
+                    debug(filepath)
+                    #debug_except(inst)
+                    debug("skipping ...")
+                    src = None # The insert will skip this
+                self.insert(source=src, include=True)
 
     def load(self, lpath=None):
         """Load a previously-saved Selector configuration.
