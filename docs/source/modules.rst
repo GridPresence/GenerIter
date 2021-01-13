@@ -1,5 +1,5 @@
-pyrobodj
-========
+GenerIter
+=========
 
 .. toctree::
    :maxdepth: 4

@@ -4,6 +4,38 @@ GenerIter.app package
 Submodules
 ----------
 
+GenerIter.app.categorise module
+-------------------------------
+
+.. automodule:: GenerIter.app.categorise
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GenerIter.app.clep\_categorise module
+-------------------------------------
+
+.. automodule:: GenerIter.app.clep_categorise
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GenerIter.app.clep\_generator module
+------------------------------------
+
+.. automodule:: GenerIter.app.clep_generator
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GenerIter.app.clep\_inventory module
+------------------------------------
+
+.. automodule:: GenerIter.app.clep_inventory
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 GenerIter.app.clibase module
 ----------------------------
 

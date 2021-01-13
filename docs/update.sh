@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
 make clean
-sphinx-apidoc -o source ../pyrobodj -f
+sphinx-apidoc -o source ../GenerIter -f
 make html
