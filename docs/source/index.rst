@@ -10,8 +10,10 @@ Welcome to GenerIter's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-Reference Documentation
-^^^^^^^^^^^^^^^^^^^^^^^
+   installation
+
+Reference
+---------
 .. toctree::
    :maxdepth: 2
 	      
