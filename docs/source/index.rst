@@ -11,6 +11,7 @@ Welcome to GenerIter's documentation!
    :caption: Contents:
 
    installation
+   consoleapps
 
 Reference
 ---------

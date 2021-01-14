@@ -5,4 +5,4 @@ sphinx-rtd-theme
 setuptools
 wheel
 twine
-
+bumpversion
