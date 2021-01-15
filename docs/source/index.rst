@@ -11,6 +11,7 @@ Welcome to GenerIter's documentation!
    :caption: Contents:
 
    installation
+   tutorials
    consoleapps
 
 Reference
@@ -27,3 +28,13 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+
+Contacts
+--------
+See the GenerIter_ GitHub repository for source code.
+
+`Write to us`_ with any questions, bugs or suggestions.
+
+.. _GenerIter: https://github.com/GridPresence/GenerIter
+.. _Write to us: generiter@gmx.com

@@ -7,7 +7,7 @@ setuptools.setup(
     name="GenerIter",
     version="0.0.17",
     author="Thomas Jackson Park & Jeremy Pavier",
-    author_email="grid.presence@gmx.com",
+    author_email="generiter@gmx.com",
     description="A package for Generative Iterative music composition.",
     long_description=long_description,
     long_description_content_type="text/markdown",

@@ -22,7 +22,7 @@ def setup(app):
 
 project = 'GenerIter'
 copyright = '2021, Thomas Jackson Park & Jeremy Pavier'
-author = 'Thomas Jackson Park & Jeremy Pavier'
+author = 'generiter@gmx.com'
 
 # The full version, including alpha/beta/rc tags
 release = '0.0.1'
@@ -36,7 +36,8 @@ release = '0.0.1'
 extensions = ['sphinx.ext.intersphinx',
               'sphinx.ext.napoleon',
               'sphinx.ext.autodoc',
-              'sphinx.ext.viewcode'
+              'sphinx.ext.viewcode',
+              'sphinx.ext.autosectionlabel'
 ]
 
 # Napoleon settings
@@ -62,6 +63,8 @@ templates_path = ['_templates']
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
 
+# Make sure the target is unique
+autosectionlabel_prefix_document = True
 
 # -- Options for HTML output -------------------------------------------------
 
