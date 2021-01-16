@@ -34,7 +34,7 @@ Contacts
 --------
 See the GenerIter_ GitHub repository for source code.
 
-`Write to us`_ with any questions, bugs or suggestions.
+Write to us @ `generiter at gmx dot com` with any questions, bugs or suggestions.
 
 .. _GenerIter: https://github.com/GridPresence/GenerIter
-.. _Write to us: generiter@gmx.com
+
