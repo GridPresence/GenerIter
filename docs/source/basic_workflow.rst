@@ -236,7 +236,7 @@ Your compositions will come out looking like:
        ├── Basic_beatsbassdrone_18.wav
        └── Basic_beatsbassdrone_19.wav
 
-As you will see, the naming of the files and the organisation of them follws the specification of the *compose.json* file, making them easy to navigate and understand. As your compositions become bigger and more complex, this will also allow you observe/extract interesting intermediate forms.
+As you will see, the naming of the files and the organisation of them follows the specification of the *compose.json* file, making them easy to navigate and understand. As your compositions become bigger and more complex, this will also allow you observe/extract interesting intermediate forms.
 
 The Next Iteration
 ^^^^^^^^^^^^^^^^^^
@@ -266,7 +266,7 @@ Edit your *compose.json* to look like:
 	}
     }
 
-As you can see, all that's happened is that a new *voices3* method of *Basic* is being invoked  and that method can be configured here to use an arbitrary set of 3 of the available voices, although in this example I have replaced the *Drone* voice with *Guitar*.
+As you can see, all that's happened is that a new *voices3* method of *Basic* is being invoked and that method can be configured here to use an arbitrary set of 3 of the available voices; although in this example I have only replaced the *Drone* voice with *Guitar*.
 
 Running **exactly the same** *generiter* command
 
