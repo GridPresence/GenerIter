@@ -78,7 +78,12 @@ class Selector():
         retval = None
         if key is not None:
             # How many entries are there in this category?
-            sellen = len(self._data[key])
+            try:
+                sellen = len(self._data[key])
+            except KeyError:
+                print("KeyError in Selector for key: {0}".format(key))
+                print(jStr(self._data))
+                raise KeyError
             # Let's not try selecting on an empty set
             if sellen > 0:
                 # If I can't select after that number of tries, there's a probably an issue
