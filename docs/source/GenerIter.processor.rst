@@ -4,10 +4,10 @@ GenerIter.processor package
 Submodules
 ----------
 
-GenerIter.processor.Beats module
+GenerIter.processor.Basic module
 --------------------------------
 
-.. automodule:: GenerIter.processor.Beats
+.. automodule:: GenerIter.processor.Basic
    :members:
    :undoc-members:
    :show-inheritance:

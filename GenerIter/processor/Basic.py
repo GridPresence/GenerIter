@@ -1,5 +1,5 @@
 """
-Generator class for all Process-based Bass algorithms.
+Generator class for some fundamental Process-based algorithms.
 
 Copyright 2020 Thomas Jackson Park & Jeremy Pavier
 
@@ -10,68 +10,17 @@ from pydub import AudioSegment
 from GenerIter.process import Process
 from GenerIter.util import debug
 
-class Beats(Process):
+class Basic(Process):
     def __init__(self):
-        super(Beats, self).__init__()
-        debug('Beats()')
+        super(Basic, self).__init__()
+        debug('Basic()')
 
-    def algorithm01(self):
-        """ This is a direct replication of the Beats algorithm in the original
-        DJProcessor code."""
-        # These could be parameterised in the config
-        DECLICK = 10
-        BEATS_VOL_RANGE = (14, 18)
-        BASS_VOL_RANGE = (18, 22)
-        DRONES_VOL_RANGE = (18, 22)
-        
-        # How many times do you want this to run?
-        iterations = int(self._config["iterations"])
-        # Need to be able to pad the correct number of zeroes
-        digits = self.intwidth(iterations)
-        # What's the base root name of the outputs?
-        track = self._config["track"]
-        # Where are we sending the outputs?
-        dest = self._config["destination"]
-        # Track repeats
-        repeats = int(self._config["repeats"])
-
-        for ctr in range(iterations):
-            # Randomly select our samples
-            beats_sample = self._inventory.selectRandom("Beats")
-            bass_sample = self._inventory.selectRandom("Bass")
-            drone_sample = self._inventory.selectRandom("Drones")
-
-            # Instantiate the audio segment
-            beats_audio = AudioSegment.from_wav(beats_sample)
-            # Adjust amplitudes and fades
-            beats_audio = self.deamplify(beats_audio, BEATS_VOL_RANGE)
-            beats_audio = self.declick(beats_audio, DECLICK)
-            
-            bass_audio = AudioSegment.from_wav(bass_sample)
-            bass_audio = self.deamplify(bass_audio, BASS_VOL_RANGE)
-            bass_audio = self.declick(bass_audio, DECLICK)
-            
-            drones_audio = AudioSegment.from_wav(drones_sample)
-            drones_audio = self.deamplify(drones_audio, DRONES_VOL_RANGE)
-            drones_audio = self.declick(drones_audio, DECLICK)
-
-            bb_overlay = beats_audio.overlay(bass_audio)
-            composite_01 = bb_overlay + bb_overlay + bb_overlay + bb_overlay
-
-            dbb_overlay = composite_01.overlay(drones_audio)
-
-            for ctr2 in range(repeats):
-                dbb_overlay = dbb_overlay + dbb_overlay
-            # Create the output file name with zero padded counter value
-            filename = "{0}_{1}.wav".format(track, str(ctr).zfill(digits))
-            # Set up the output path
-            dest = os.path.join(destination, filename)
-            # Write it out
-            dbb_overlay.export(dest, format="wav")
-
-    def algorithm02(self):
+    def beatsbassdrone(self):
         """ This is a variant of the algorithm01 in the original
-        DJProcessor code."""
+        DJProcessor code.
+
+        As the name suggests, it expects to find categories in the sample inventory mapped into the Beats, Bass and Drone voices. 
+        Otherise this algorithm will fail."""
         # These could be parameterised in the config
         DECLICK = 10
         DRUMS_VOL_RANGE = (14, 18)
@@ -91,9 +40,9 @@ class Beats(Process):
 
         for ctr in range(iterations):
             # Randomly select our samples
-            drums_sample = self._inventory.selectRandom("Drums")
+            drums_sample = self._inventory.selectRandom("Beats")
             bass_sample = self._inventory.selectRandom("Bass")
-            pads_sample = self._inventory.selectRandom("Pads")
+            pads_sample = self._inventory.selectRandom("Drone")
 
             # Instantiate the audio segment
             drums_audio = AudioSegment.from_wav(drums_sample)
@@ -116,22 +65,16 @@ class Beats(Process):
 
             for ctr2 in range(repeats):
                 dbb_overlay = dbb_overlay + dbb_overlay
-            # Create the output file name with zero padded counter value
-            #if self.supported(self._config["format"]) is True:
-            #   filename = "{0}_{1}.{2}".format(track, str(ctr).zfill(digits), self._config["format"])
-            #  # Set up the output path
-            # destination = os.path.join(dest, filename)
-            # Write it out
-            # dbb_overlay.export(destination, format=self._config["format"])
+            
             import inspect
 
             fname = inspect.currentframe().f_code.co_name
             self.write(algorithm=fname, counter=ctr, source=dbb_overlay)
 
 
-    def algorithm03(self):
-        """ This is a variant of the algorithm01 in the original
-        DJProcessor code."""
+    def voices3(self):
+        """ This algorithm uses the same algorith as beatsbassdrone, 
+        but allows the user to designate the 3 voices to be used in the compose file."""
         # These could be parameterised in the config
         DECLICK = 10
         DRUMS_VOL_RANGE = (14, 18)
@@ -149,11 +92,13 @@ class Beats(Process):
         # Track repeats
         repeats = int(self._config["repeats"])
 
+        voices = self._config["voices"]
+
         for ctr in range(iterations):
             # Randomly select our samples
-            drums_sample = self._inventory.selectRandom("Beat")
-            bass_sample = self._inventory.selectRandom("Bass")
-            pads_sample = self._inventory.selectRandom("Pad")
+            drums_sample = self._inventory.selectRandom(voices[0])
+            bass_sample = self._inventory.selectRandom(voices[1])
+            pads_sample = self._inventory.selectRandom(voices[2])
 
             # Instantiate the audio segment
             drums_audio = AudioSegment.from_wav(drums_sample)
@@ -176,13 +121,7 @@ class Beats(Process):
 
             for ctr2 in range(repeats):
                 dbb_overlay = dbb_overlay + dbb_overlay
-            # Create the output file name with zero padded counter value
-            #if self.supported(self._config["format"]) is True:
-            #   filename = "{0}_{1}.{2}".format(track, str(ctr).zfill(digits), self._config["format"])
-            #  # Set up the output path
-            # destination = os.path.join(dest, filename)
-            # Write it out
-            # dbb_overlay.export(destination, format=self._config["format"])
+            
             import inspect
 
             fname = inspect.currentframe().f_code.co_name
