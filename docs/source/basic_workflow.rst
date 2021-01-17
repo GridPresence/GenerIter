@@ -186,7 +186,7 @@ The first composer control file is going to be very simple. So, fire up the text
        }
    }
 
-The **Globals** parameters are those that are literally global to the generiter instance when it runs. In thos simplified form, you will need to supply it with the path of the directory into which your generated tracks will be created.
+The **Globals** parameters are those that are literally global to the generiter instance when it runs. In this simplified form, you will need to supply it with the path of the directory into which your generated tracks will be created.
 
 The top part of the composition file translates into
 
@@ -207,7 +207,7 @@ Finally, we get to generate some tracks, and for this we use `generiter`_ thus:
 		
    generiter -L inventory.json -C compose.json
 
-You can then watch as your tracks are generated into a time and date stamped subdirectory of your target directory. This allows you to do multiple runs without accidentally overwriting any earlier works.
+You can then watch as your tracks are generated into a time- and date-stamped subdirectory of your target directory. This allows you to do multiple runs without accidentally overwriting any earlier works.
 
 Your compositions will come out looking like:
 
@@ -236,12 +236,12 @@ Your compositions will come out looking like:
        ├── Basic_beatsbassdrone_18.wav
        └── Basic_beatsbassdrone_19.wav
 
-As you will see, the naming of the files and the orhanisation of them follws the specification of the *compose.json* file, making them easy to navigate and understand. As your compositions become bigger and more complex, this will also allow you observe/extract interesting intermediate forms.
+As you will see, the naming of the files and the organisation of them follws the specification of the *compose.json* file, making them easy to navigate and understand. As your compositions become bigger and more complex, this will also allow you observe/extract interesting intermediate forms.
 
 The Next Iteration
 ^^^^^^^^^^^^^^^^^^
 
-That's all well and good, but it's only using 3 of the voices in your inventory. Let's explore a slightly more flexible algorithm **voices3**, which allows you to arbitrarily assign three difference voices from your inventory and then randomly use thos in exactly the same way.
+That's all well and good, but it's only using 3 of the voices in your inventory. Let's explore a slightly more flexible algorithm **voices3**, which allows you to arbitrarily assign three difference voices from your inventory and then use those in exactly the same way.
 
 Edit your *compose.json* to look like:
 
@@ -266,7 +266,7 @@ Edit your *compose.json* to look like:
 	}
     }
 
-As you can see, all that's happened is that a new *voices3* method of *Basic* is being invoked, in addition, and that method can be configured here to use an arbitrary set of 3 of the available voices, although in this example only the *Drone* voice has been replaced with *Guitar*.
+As you can see, all that's happened is that a new *voices3* method of *Basic* is being invoked  and that method can be configured here to use an arbitrary set of 3 of the available voices, although in this example I have replaced the *Drone* voice with *Guitar*.
 
 Running **exactly the same** *generiter* command
 
@@ -321,9 +321,9 @@ yields output arranged thus:
        ├── Basic_voices3_18.wav
        └── Basic_voices3_19.wav
 
-So, we have not only created a set of *voices3*-derived compositions, we have also created a new set of *beatsbassdrone*-derived compositions. These are not copies of the previous set, buit a completely new set using the same algorithm, but with different random selections and decisions.
+So, we have not only created a set of *voices3*-derived compositions, we have also created a new set of *beatsbassdrone*-derived compositions. These are not copies of the previous set, but a completely new set using the same algorithm, but with different random selections and decisions.
 
-At this point, when you listen to all the outputs, you may startr to here a certain *same-y* quality to some of the outputs. It should be clear that, even with these very basic algorithms, the diversity and variation in your compositions is going to depend very much on the breadth and size of the sample sets in your libraries.
+At this point, when you listen to all the outputs, you may start to hear a certain *same-y* quality to some of the outputs. It should be clear that, even with these very basic algorithms, the diversity and variation in your compositions is going to depend very much on the breadth and size of the sample sets in your libraries.
 
 Another Iteration
 ^^^^^^^^^^^^^^^^^
