@@ -13,11 +13,14 @@ from GenerIter.source import WavSource
 from GenerIter.util import debug, jStr, mkdir_p
 
 class Process():
-    SUPPORTED_FORMATS = ["wav", "mp3", "flac"]
-    
+    # Currently only WAV is supported, but this list is expected to grow
+    SUPPORTED_FORMATS = ["wav"]
+
     def __init__(self, prefix=None):
         self._config = None
         self._inventory = None
+        self._destination = None
+        self._format = "wav"
         self._content = []
         self._prefix = prefix
         debug('Process()')
@@ -42,6 +45,12 @@ class Process():
         segment = segment - diminish
         return segment
 
+    def getsegment(self, sample, limits, fade):
+        retval = AudioSegment.from_wav(sample)
+        retval = self.deamplify(retval, limits)
+        retval = self.declick(retval, fade)
+        return retval
+
     def intwidth(self, value):
         retval = 1 + int(math.log10(value))
         return retval
@@ -59,16 +68,11 @@ class Process():
         # Set the correct sub directory and ensure it exists
         destdir = os.path.join(self._destination, base)
         mkdir_p(destdir)
+        # Zero pad the counter string
         ctr = str(counter).zfill(digits)
         track = f"{base}_{algorithm}_{ctr}"
         debug(f"Track: {track}")
-        # Where are we sending the outputs?
-        #if self._prefix is not None:
-        #    destination = os.path.join(self._config["destination"], self._prefix)
-        #else:
-        #    destination = self._config["destination"]
-        
-        #form = self._config["format"]
+
         # Create the output file name with zero padded counter value
         if self.supported(self._format) is True:
             filename = "{0}.{1}".format(track, self._format)
@@ -80,5 +84,4 @@ class Process():
             src = WavSource(dpath=dest, dexist=True)
             self._inventory.insert(src)
         else:
-            print("Unsupported output format : {0}".format(form))
-
+            print("Unsupported output format : {0}".format(self._format))
