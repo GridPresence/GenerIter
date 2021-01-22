@@ -14,7 +14,7 @@ import GenerIter.excepts as robox
 
 class Basic(Process):
     def __init__(self):
-        super(Basic, self).__init__()
+        super().__init__()
         debug('Basic()')
 
     def beatsbassdrone(self):
