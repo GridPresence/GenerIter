@@ -165,6 +165,48 @@ This creates an `inventory.json` file that will look like:
 	}
    }
 
+The Windows equivalent will look something like:
+
+.. code:: json
+
+    {
+       "Bass":{
+           "C:\\Users\\mysti\\Desktop\\Sample_Sounds\\Bass\\Bass_1.wav":true,
+           "C:\\Users\\mysti\\Desktop\\Sample_Sounds\\Bass\\Bass_2.wav":true,
+           "C:\\Users\\mysti\\Desktop\\Sample_Sounds\\Bass\\Bass_3.wav":true
+       },
+       "Beats":{
+           "C:\\Users\\mysti\\Desktop\\Sample_Sounds\\Beats\\Beats_1.wav":true,
+           "C:\\Users\\mysti\\Desktop\\Sample_Sounds\\Beats\\Beats_2.wav":true,
+           "C:\\Users\\mysti\\Desktop\\Sample_Sounds\\Beats\\Beats_3.wav":true
+       },
+       "Drone":{
+           "C:\\Users\\mysti\\Desktop\\Sample_Sounds\\Drone\\Drone_1.wav":true,
+           "C:\\Users\\mysti\\Desktop\\Sample_Sounds\\Drone\\Drone_2.wav":true,
+           "C:\\Users\\mysti\\Desktop\\Sample_Sounds\\Drone\\Drone_3.wav":true
+       },
+       "Guitar":{
+           "C:\\Users\\mysti\\Desktop\\Sample_Sounds\\Guitar\\Guitar_1.wav":true,
+           "C:\\Users\\mysti\\Desktop\\Sample_Sounds\\Guitar\\Guitar_2.wav":true,
+           "C:\\Users\\mysti\\Desktop\\Sample_Sounds\\Guitar\\Guitar_3.wav":true
+       },
+       "Organ":{
+           "C:\\Users\\mysti\\Desktop\\Sample_Sounds\\Organ\\Organ_1.wav":true,
+           "C:\\Users\\mysti\\Desktop\\Sample_Sounds\\Organ\\Organ_2.wav":true,
+           "C:\\Users\\mysti\\Desktop\\Sample_Sounds\\Organ\\Organ_3.wav":true
+       },
+       "Pepper":{
+           "C:\\Users\\mysti\\Desktop\\Sample_Sounds\\Pepper\\Pepper_1.wav":true,
+           "C:\\Users\\mysti\\Desktop\\Sample_Sounds\\Pepper\\Pepper_2.wav":true,
+           "C:\\Users\\mysti\\Desktop\\Sample_Sounds\\Pepper\\Pepper_3.wav":true
+       },
+       "Saxophone":{
+           "C:\\Users\\mysti\\Desktop\\Sample_Sounds\\Saxophone\\Saxophone_1.wav":true,
+           "C:\\Users\\mysti\\Desktop\\Sample_Sounds\\Saxophone\\Saxophone_2.wav":true,
+           "C:\\Users\\mysti\\Desktop\\Sample_Sounds\\Saxophone\\Saxophone_3.wav":true
+       }
+    }
+
 All the paths are absolute, which makes the inventory file fully movable to anywhere in your filesystem.
    
 Creating the composer control file
