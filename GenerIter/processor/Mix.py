@@ -40,7 +40,7 @@ class Mix(Process):
 
             summation = audios[0]
             for nctr in range(nvoices-1):
-                summation = summation.overlay(audios[nctr+1], loop=true)
+                summation = summation.overlay(audios[nctr+1], loop=True)
             summation = summation.normalize()
             
             fname = inspect.currentframe().f_code.co_name
