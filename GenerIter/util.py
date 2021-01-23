@@ -158,3 +158,7 @@ def localTimestamp(some_time=None, time_format=None):
         the_time_format = time_format
     time_string = the_time.strftime(the_time_format)
     return time_string
+
+
+def nextPowerOf2(x):  
+    return 1 if x == 0 else 2**(x - 1).bit_length()

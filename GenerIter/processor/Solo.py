@@ -51,8 +51,8 @@ class Solo(Process):
         debug('Solo()')
 
     def generic(self):
-        VOL_UP = 24
-        VOL_DN = 30
+        VOL_UP = 14
+        VOL_DN = 18
         # How many times do you want this to run?
         iterations = int(self._config["tracks"])
         

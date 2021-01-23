@@ -325,15 +325,77 @@ So, we have not only created a set of *voices3*-derived compositions, we have al
 
 At this point, when you listen to all the outputs, you may start to hear a certain *same-y* quality to some of the outputs. It should be clear that, even with these very basic algorithms, the diversity and variation in your compositions is going to depend very much on the breadth and size of the sample sets in your libraries.
 
-Another Iteration
-^^^^^^^^^^^^^^^^^
+Layering and sequencing
+^^^^^^^^^^^^^^^^^^^^^^^
 
-Work In Progress - using more randomness to select N voices
+Having done some variations on the **Basic** algorithms (and there are more to play with when you check the code documentation), you might think that it's time to add some complexity to the music you are creating.
 
-Yet Another Iteration
-^^^^^^^^^^^^^^^^^^^^^
+**GenerIter** obviously provides facilities for generating different layers as separate outputs. However, it would be good if there was an algorithmic way of combinging these outputs into newer, richer compositions. So that feature is also built into the system.
 
-Work Progress - using complete randomness to select a random number of voices
+Here's an example composition file that illustrates how this is done.
+
+.. code-block:: json
+		
+    {
+        "Basic" : {
+	    "voices3" : {
+	        "tracks" : 20,
+	        "repeats" : 3,
+	        "voices" : [
+		    "Beats",
+        	    "Bass",
+		    "Drone"
+	        ]
+	    }
+        },
+        "Solo" : {
+            "generic" : {
+                "tracks" : 20,
+ 	        "voice" : "Guitar"
+	    }
+        },
+        "Mix" : {
+	    "multitrack" : {
+	        "tracks" : 20,
+	        "voices" : [
+		    "Basic",
+		    "Solo",
+                    "Solo",
+                    "Solo"
+	        ]
+	    }
+        },
+        "Globals" : {
+	    "destination" : "<your path here>",
+	    "sequence" : [
+	        "Basic",
+	        "Solo",
+	        "Mix"
+	    ]
+        }
+    }
+
+The first section for the **Basic** processor should look familiar.
+
+Two new processors are invoked:
+
+* **Solo** : a draft generic mechanism for using a single voice and generating solo or lead lines.
+* **Mix**  : a simple multitrack mixer for creating a combined output.
+
+To understand the change to the **Globals** section, a bit of understanding of the software structure is required and a short lesson in some features of Python data structures.
+
+When you created the `inventory.json` file in the earlier tutorial, what actually happened was that an internal Python data structure was converted into a JSON string representation and then written to your disc. This is done because, as well as being easily read by humans, it is also easily read by Python. This means that the entire data structure can be recreated in memory, with all of its earlier properties, by reading and parsing the file. This a very easy operation in Python.
+
+So, when you set the **-L** option on the **generiter** command, that's what happens; an object of class `Selector` is created and used throughout the process lifetime.
+
+One of the features of this design is that as the generative process continues and writes out compositions, each of those compositions is also registered in the `Selector` object in memory. This is done precisely so that later iterations can use the outputs from earlier iterations.
+
+However, this throws up a problem in the way Python Python deals with the different built-in data structures in use. When you express a list, the ordering is embedded in the definition of that list: `[ 0, 1 ,2, 3, 4 ....]` which means that if the software iterates over the list, the contents will be accessed in the index order in a predictable fashion. The same is not so for a dictionary: `{ "a" : 0, "b" : 1, "c" : 2, ... }`. The order in which entries are iterated is not guaranteed to be in any useful order, either order of insertion or sorted.
+
+This means that if the **Mix** algorithm depends on the existence of previously-generated **Basic** and **Solo** compositions, it is necessary to tell the overall process that it needs to process the algorithms in the correct order such that when the **Mix** algorithm wants to select material, the material exists for it to be able to do so. This is achieved using the **"sequence"** field in the **"Globals"** setting. Implementated as a list, this order is guaranteed.
+
+
+
 
 .. _genercat: genercat_cli.html
 .. _generinv: generinv_cli.html

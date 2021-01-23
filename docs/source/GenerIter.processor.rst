@@ -12,6 +12,22 @@ GenerIter.processor.Basic module
    :undoc-members:
    :show-inheritance:
 
+GenerIter.processor.Mix module
+------------------------------
+
+.. automodule:: GenerIter.processor.Mix
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GenerIter.processor.Solo module
+-------------------------------
+
+.. automodule:: GenerIter.processor.Solo
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 
