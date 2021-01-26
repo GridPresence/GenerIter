@@ -1,7 +1,7 @@
 Basic Workflow
 --------------
 
-This text uses MacOS/Linux-style pathnames throughout. The code has been written such that it should also support DOS-style paths in a Windows-based command shell.
+This text uses MacOS/Linux-style pathnames generally. The code has been written such that it should also support DOS-style paths in a Windows-based command shell. Key differences will be highlighted when they occur.
 
 To illustrate this workflow with a worked example, I am going to create a very small sample library under `/tmp/samples` using the WAV samples provided `Archive.org`_.
 Note that the "GenerIter_Demo_Track" files should be moved into a different directory outside the `/tmp/samples` tree as they are not used here.
@@ -229,6 +229,22 @@ The first composer control file is going to be very simple. So, fire up the text
    }
 
 The **Globals** parameters are those that are literally global to the generiter instance when it runs. In this simplified form, you will need to supply it with the path of the directory into which your generated tracks will be created.
+
+For Linux/MacOS users this will look like:
+
+.. code-block:: json
+
+   "Globals" : {
+       "destination" : "/my/output/path"
+   }
+
+Whereas Windows users will need to escape the backslashes in the DOS form:
+
+.. code-block:: json
+
+   "Globals" : {
+       "destination" : "c:\\my\\output\\path"
+   }
 
 The top part of the composition file translates into
 
