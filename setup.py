@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="GenerIter",
-    version="0.1.3-dev3",
+    version="0.1.3-dev4",
     author="Thomas Jackson Park & Jeremy Pavier",
     author_email="generiter@gmx.com",
     description="A package for Generative Iterative music composition.",
