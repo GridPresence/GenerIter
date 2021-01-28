@@ -55,8 +55,8 @@ class ProcessorFactory():
                 sys.exit(-1)
         return self._method
 
-    def configure(self, invent, config, dest, form):
-        self._klass.configure(inventory=invent, configuration=config, destination=dest, forrmat=form)
+    def configure(self, invent, config, dest, form, size):
+        self._klass.configure(inventory=invent, configuration=config, destination=dest, forrmat=form, tsize=size)
 
     def process(self):
         self._method()

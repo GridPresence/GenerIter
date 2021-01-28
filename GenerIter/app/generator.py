@@ -55,6 +55,7 @@ class Generator(CLIBase):
         self._sequence = None
         self._destination = os.getcwd()
         self._format = "wav"
+        self._tsize = "m"
         try:
             if "sequence" in self._configuration["Globals"]:
                 if len(self._configuration["Globals"]["sequence"]) > 0:
@@ -71,6 +72,12 @@ class Generator(CLIBase):
         try:
             if "format" in self._configuration["Globals"]:
                 self._format = self._configuration["Globals"]["format"]
+        except KeyError:
+            pass
+
+        try:
+            if "tsize" in self._configuration["Globals"]:
+                self._tsize = self._configuration["Globals"]["tsize"].lower()
         except KeyError:
             pass
 
@@ -93,7 +100,8 @@ class Generator(CLIBase):
                     factory.configure(invent=self._selector,
                                       config=self._configuration[voice][processor],
                                       dest=self._destination,
-                                      form=self._format)
+                                      form=self._format,
+                                      size=self._tsize)
                     factory.process()
         else:
             for voice in self._voices:
@@ -103,7 +111,8 @@ class Generator(CLIBase):
                         factory.configure(invent=self._selector,
                                           config=self._configuration[voice][processor],
                                           dest=self._destination,
-                                          form=self._format)
+                                          form=self._format,
+                                          size=self._tsize)
                         factory.process()
 
 #if __name__ == '__main__':

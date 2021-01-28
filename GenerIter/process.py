@@ -16,6 +16,15 @@ class Process():
     # Currently only WAV is supported, but this list is expected to grow
     SUPPORTED_FORMATS = ["wav"]
 
+    TSHIRT = {
+        "s" : 180,
+        "m" : 300,
+        "l" : 480,
+        "xl" : 780,
+        "xxl" : 1260,
+        "xxxl" : 2640
+    }
+
     def __init__(self, prefix=None):
         self._config = None
         self._inventory = None
@@ -23,13 +32,15 @@ class Process():
         self._format = "wav"
         self._content = []
         self._prefix = prefix
+        self._tsize = "m"
         debug('Process()')
 
-    def configure(self, inventory, configuration, destination, forrmat):
+    def configure(self, inventory, configuration, destination, forrmat, tsize):
         self._config = configuration
         self._inventory = inventory
         self._destination = destination
         self._format = forrmat
+        self._tsize = tsize
 
     def default(self):
         debug('No-op default processing logic')
@@ -51,12 +62,44 @@ class Process():
         retval = self.declick(retval, fade)
         return retval
 
+    def getnormedsegment(self, sample, muted, fade):
+        retval = AudioSegment.from_wav(sample)
+        retval = retval.normalize()
+        reteval = retval - muted
+        retval = self.declick(retval, fade)
+        return retval
+
+
     def intwidth(self, value):
         retval = 1 + int(math.log10(value))
         return retval
 
     def supported(self, value):
         return value in self.SUPPORTED_FORMATS
+
+    def threshold(self):
+        if self._tsize in self.TSHIRT:
+            target = self.TSHIRT[self._tsize]
+        else:
+            target = self.TSHIRT["m"]
+        lbnd = (9 * target) // 10
+        ubnd = (11 * target) // 10
+        retval = random.randrange(lbnd, ubnd)
+        return retval
+
+    def padtolength(self, segment, length, fader, front=False):
+        quiet = length - len(segment)
+        if quiet <= 0:
+            retval = segment[:length]
+            retval = self.declick(retval, fader)
+        else:
+            pad = AudioSegment.silent(duration=quiet,
+                                       frame_rate=segment.frame_rate)
+            if front is False:
+                retval = segment + pad
+            else:
+                retval = pad + segment
+        return retval
 
     def write(self, algorithm, counter, source):
         # How many times do you want this to run?
