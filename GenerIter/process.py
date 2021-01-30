@@ -13,6 +13,10 @@ from GenerIter.source import WavSource
 from GenerIter.util import debug, jStr, mkdir_p
 
 class Process():
+    """This is the abstract base class from which all other processors are derived.
+
+    As such it implements the core interface as well as several important generic helper services which can simplify the derived algorithm implementations.
+    """
     # Currently only WAV is supported, but this list is expected to grow
     SUPPORTED_FORMATS = ["wav"]
 
@@ -47,6 +51,14 @@ class Process():
         debug(type(self))
 
     def declick(self, segment, value):
+        """This is a helper function with which a sharp fade/rise can be applied to each end of an AudioSegment to reduce the potential for 
+        'clicking' when they are connected end-to-end.
+        Args:
+            value (int) : number of frames across which the sample will be faded from full gain to zero (typically 10 seems to work well).
+
+        Returns:
+            AudioSegment
+        """
         segment = segment.fade_in(value)
         segment = segment.fade_out(value)
         return segment
@@ -65,8 +77,10 @@ class Process():
     def getnormedsegment(self, sample, muted, fade):
         retval = AudioSegment.from_wav(sample)
         retval = retval.normalize()
-        reteval = retval - muted
-        retval = self.declick(retval, fade)
+        if muted > 0:
+            reteval = retval - muted
+        if fade > 0:
+            retval = self.declick(retval, fade)
         return retval
 
 
@@ -94,12 +108,22 @@ class Process():
             retval = self.declick(retval, fader)
         else:
             pad = AudioSegment.silent(duration=quiet,
-                                       frame_rate=segment.frame_rate)
+                                      frame_rate=segment.frame_rate)
             if front is False:
                 retval = segment + pad
             else:
                 retval = pad + segment
         return retval
+
+    def bracket(self, segment, frontmult=1.0, backmult=1.0):
+        frunt = random.randrange(int(frontmult * len(segment)))
+        bak = random.randrange(int(backmult * len(segment)))
+        front = AudioSegment.silent(duration=frunt, frame_rate=segment.frame_rate)
+        back = AudioSegment.silent(duration=bak, frame_rate=segment.frame_rate)
+        retval = front + segment + back
+        return retval
+        
+        
 
     def write(self, algorithm, counter, source):
         # How many times do you want this to run?
