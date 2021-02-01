@@ -194,12 +194,12 @@ class Basic(Process):
         voices = self._config["voices"]
         nvoices = len(voices)
         cycle = self._config["cycle"]
-        
+      
         if nvoices < 3:
             raise robox.GIParameterErr("Insufficient voices specified for the groove algorithm")
 
         # Need to keep all overlays below the clipping threshold
-        mute = 3.0 * nextPowerOf2(nvoices)
+        mute = 6.0 * nextPowerOf2(nvoices)
 
         for ctr in range(iterations):
             audios = []
@@ -209,7 +209,7 @@ class Basic(Process):
             # Randomly select our samples
             for voice in voices:
                 sample = self._inventory.selectRandom(voice)
-                audio = self.getnormedsegment(sample, mute, declick)
+                audio = self.getsegment(sample, mute, declick)
                 audios.append(audio)
 
             for aud in range(2):

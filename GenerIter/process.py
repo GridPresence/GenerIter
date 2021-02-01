@@ -50,11 +50,14 @@ class Process():
         debug('No-op default processing logic')
         debug(type(self))
 
-    def declick(self, segment, value):
-        """This is a helper function with which a sharp fade/rise can be applied to each end of an AudioSegment to reduce the potential for 
+    def declick(self, segment, value=10):
+        """This is a helper function with which a fade/rise can be applied to each end of an AudioSegment to reduce the potential for 
         'clicking' when they are connected end-to-end.
+
+        Can also be used, with longer fade times, if large track fades are required.
+
         Args:
-            value (int) : number of frames across which the sample will be faded from full gain to zero (typically 10 seems to work well).
+            value (int) : number of milliseconds across which the segment will be faded from full gain to zero (typically 10 seems to work well).
 
         Returns:
             AudioSegment
@@ -68,17 +71,16 @@ class Process():
         segment = segment - diminish
         return segment
 
-    def getsegment(self, sample, limits, fade):
-        retval = AudioSegment.from_wav(sample)
-        retval = self.deamplify(retval, limits)
-        retval = self.declick(retval, fade)
-        return retval
+    #def getsegment(self, sample, limits, fade):
+    #    retval = AudioSegment.from_wav(sample)
+    #    retval = self.deamplify(retval, limits)
+    #    retval = self.declick(retval, fade)
+    #    return retval
 
-    def getnormedsegment(self, sample, muted, fade):
+    def getsegment(self, sample, muted, fade):
         retval = AudioSegment.from_wav(sample)
-        retval = retval.normalize()
         if muted > 0:
-            reteval = retval - muted
+            retval = retval - muted
         if fade > 0:
             retval = self.declick(retval, fade)
         return retval
