@@ -5,13 +5,14 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="GenerIter",
-    version="0.2.0-dev16",
+    version="0.2.0-dev17",
     author="Thomas Jackson Park & Jeremy Pavier",
     author_email="generiter@gmx.com",
     description="A package for Generative Iterative music composition.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/GridPresence/GenerIter",
+    license="MIT",
     packages=setuptools.find_packages(),
     install_requires=['pydub'],
     classifiers=[
