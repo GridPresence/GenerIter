@@ -415,12 +415,12 @@ Here's an example composition file that illustrates how this is done.
         "Mix" : {
 	    "multitrack" : {
 	        "tracks" : 20,
-	        "voices" : [
-		    "Basic",
-		    "Solo",
-                    "Solo",
-                    "Solo"
-	        ]
+	        "voices" : {
+		    "Basic" : 0,
+		    "Solo" : 0,
+                    "Solo" : 0,
+                    "Solo" : 0
+	        }
 	    }
         },
         "Globals" : {
@@ -452,7 +452,9 @@ However, this throws up a problem in the way Python Python deals with the differ
 
 This means that if the **Mix** algorithm depends on the existence of previously-generated **Basic** and **Solo** compositions, it is necessary to tell the overall process that it needs to process the algorithms in the correct order such that when the **Mix** algorithm wants to select material, the material exists for it to be able to do so. This is achieved using the **"sequence"** field in the **"Globals"** setting. Implementated as a list, this order is guaranteed.
 
+The **Mix** configuration also illustrates the application of output balancing. Each of the chosen voices has a mute vale expressed in dB. For this example all the tracks are unmuted. This might result in some clipping in the output, depending on the source material. This is where you can literally implement the mix levels to get the balance you want.
 
+**Beta Testers Note:*** This is a change of config format for the **Mix.multitrack** module from that with which you were originally testing. The `voices` are now represented as a mapping dictionary between the voice and a level rather than as a simple list of voices.
 
 
 .. _genercat: genercat_cli.html
