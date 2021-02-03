@@ -41,7 +41,7 @@ class Mix(Process):
                 sample = self._inventory.selectRandom(voice)
                 audio = AudioSegment.from_wav(sample)
                 #audio = audio.normalize()
-                audio = audio - level
+                audio = audio + level
                 audios.append(audio)
 
             summation = audios[0]
