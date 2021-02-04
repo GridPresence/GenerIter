@@ -416,10 +416,10 @@ Here's an example composition file that illustrates how this is done.
 	    "multitrack" : {
 	        "tracks" : 20,
 	        "voices" : {
-		    "Basic" : 0,
-		    "Solo" : 0,
-                    "Solo" : 0,
-                    "Solo" : 0
+		    "Basic" : 12,
+		    "Solo" : -6,
+                    "Solo" : -6,
+                    "Solo" : -6
 	        }
 	    }
         },
@@ -438,7 +438,7 @@ The first section for the **Basic** processor should look familiar.
 Two new processors are invoked:
 
 * **Solo** : a draft generic mechanism for using a single voice and generating solo or lead lines.
-* **Mix**  : a simple multitrack mixer for creating a combined output.
+* **Mix**  : a simple multitrack mixer for creating a combined output and setting relative gain levels for the disparate voices in the mix.
 
 To understand the change to the **Globals** section, a bit of understanding of the software structure is required and a short lesson in some features of Python data structures.
 
@@ -454,7 +454,7 @@ This means that if the **Mix** algorithm depends on the existence of previously-
 
 The **Mix** configuration also illustrates the application of output balancing. Each of the chosen voices has a mute vale expressed in dB. For this example all the tracks are unmuted. This might result in some clipping in the output, depending on the source material. This is where you can literally implement the mix levels to get the balance you want.
 
-**Beta Testers Note:*** This is a change of config format for the **Mix.multitrack** module from that with which you were originally testing. The `voices` are now represented as a mapping dictionary between the voice and a level rather than as a simple list of voices.
+**Beta Testers Note:** This is a change of config format for the **Mix.multitrack** module from that with which you were originally testing. The `voices` are now represented as a mapping dictionary between the voice and a level rather than as a simple list of voices.
 
 
 .. _genercat: genercat_cli.html

@@ -24,7 +24,7 @@ The **GenerIter** package uses `pydub <https://github.com/jiaaro/pydub/blob/mast
 
 However, **pydub** has a partial dependency on `FFmpeg <https://ffmpeg.org/>`_
 
-If you only wish to use **WAV** format audio throughout, the package will work without this dependency. However, if you wish to be able to transparently convert into and out of other formats (e.g. **mp3**, **FLAC**, etc.) you will need to install `FFmpeg <https://ffmpeg.org/>`_ on your machine.
+At the moment we only use **WAV** format audio throughout, so the package will work without this dependency and only generate a benign warning. Ultimately we wish to be able to transparently convert into and out of other formats (e.g. **mp3**, **FLAC**, etc.). In order to use that functionality, you will need to install `FFmpeg <https://ffmpeg.org/>`_ on your machine later.
 
 Installing **GenerIter** is as simple as typing:
 

@@ -6,3 +6,4 @@ Tutorials
 
    basic_workflow
    advanced_grooving
+   roll_your_own_algorithms
