@@ -1,117 +1,162 @@
-Advanced Grooving
------------------
+Roll Your Own Algorithm
+-----------------------
 
-For this tutorial, it will be assumed that the user has compiled their own inventory of samples. The voicings given here are purely illustrative and should be adapted to fit the user's own library organisation.
+(For this tutorial, it is assumed that the user has a familiarity with Python programming terms and idioms.)
 
-This tutorial will use two new algorithms `Basic.groove` and `Solo.multivoice_serial_ordered`. It also reuses the `Mix.multitrack` algorithm to integrate each component part back into a whole.
+One of the design objectives of this module is to provide a framework into which users can extend and customise the algorithmic capabilities of the GenerIter command without touching the supplied code.
+
+This is achieved through the use of the `GenerIter.Process` as an abstract base class from which new processors can be derived, encompassing the use of the Selector and Config classes and drivine the `generiter` app purely through data configuration.
+
+For this tutorial a dummy `Process`-derived class will be implemented to illustrate the mechanism. For real generative audio algorithmic development, the user is encouraged to examine the existing algorithms and processors, and read the **pydub** API documentation, to understand and use the example implementations as references for further development. Feel free to cut and paste implementation fragments if they are useful.
+
+Create your library module
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In this example we want to create a new algorithm. Let's call it **local01**.
+
+To do this, the algorithm needs to be attached to a **Process**-derived object, which we'll call **Myprocess**.
+
+In order to access the object module at runtime, we need to put it in a library module. We'll call this **mylib**.
+
+Pythonistas will be able to do this easily enough from the description above, but even then they are likely to make errors. To simplify the process and minimise basic system errors,the **GenerIter** module comes with its own code generator for local algorithm development, called **generalg**.
+
+To achieve the structures described above:
+
+.. code:: bash
    
-Creating the composer control file
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   generalg -L mylib -M myprocess -A local01
 
-The new composer control file is more complex, but follows a layering pattern with which you should now be familiar:
+will ensure that a directory named **testlib** is created.
 
-.. code-block:: json
+Within **mylib**, the app ensures that the **__init__.py** and **Myprocess.py** files exist.
+
+**Note :** Only the library name is case-sensitive. All other parameters will be pushed into lower case and the module name will be capitalized.
+
+The **Myprocess.py** will contain:
+
+.. code:: python
+
+   from GenerIter.process import Process
+   
+   class Myprocess(Process):
+   
+       def __init__(self):
+	  super().__init__()
+       
+       
+       def local01(self):
+	  print("Executing local01")
+	  # Your code goes here
+
+Testing your module
+^^^^^^^^^^^^^^^^^^^
+
+This is easy to test.
+
+Create a simple **test.json** file:
+
+.. code:: json
 
    {
-       "Basic" : {
-           "groove" : {
-               "tracks" : 50,
-               "cycle" : 4,
-               "voices" : [
-                   "Bass",
-                   "Beat",
-                   "Percussion",
-                   "Pad"
-	       ]
-           }
-       },
-       "Solo" : {
-           "multivoice_serial_ordered" : {
-               "tracks" : 50,
-               "voices" : [
-                   "Synth",
-                   "Synth",
-                   "Piano",
-                   "Vox",
-                   "Synth",
-                   "Synth"
-	       ]
-           }
-       },
-       "Mix" : {
-           "multitrack" : {
-               "tracks" : 30,
-               "voices" : {
-                   "Basic" : 12,
-		   "Solo" : -3
-	       }
-           }
-       },
-       "Globals" : {
-           "destination" : "<your path here>",
-           "tsize" : "s",
-           "sequence" : [
-	       "Basic",
-               "Solo",
-               "Mix"
-           ]
+       "Myprocess" : {
+           "local01" : {
+	   }
        }
    }
 
-Global variables
-^^^^^^^^^^^^^^^^
+In the following example, the name of the inventory file is irrelevant - although it has to be there to satisfy the constraints of the application, no selection processing is specified so no output files will get generated.
 
-The **Globals** section has a new parameter which allows you to roughly control the overall length of the tracks in your compositions. These are specified in t-shirt sizes and are currently defined in seconds thus:
+To test the new library module:
 
-.. code-block:: python
+.. code:: bash
 
-   TSHIRT = {
-       "s" : 180,
-       "m" : 300,
-       "l" : 480,
-       "xl" : 780,
-       "xxl" : 1260,
-       "xxxl" : 2640
-    }
+   generiter -I someinventoryfile.json -L test.json -P mylib
 
-So a `tsize` of "s" represents a soft threshold of 3 minutes +/- 10% (calculated at runtime). This is a "soft" threshold because the final length of any track will be determined by the width of the segments used and the number of repeats that can be concatenated before the overall track length exceeds the limit. It is a very approximate threshold and merely represents a promise to keep the track within an order of magnitude. Hence the use of a t-shirt sizing metaphor for approximation.
+This should produce the following output:
 
-As before, the `sequence` list specifies the order in which to execute the layers, so that outputs from early layers are available to be selected into the final micx layers.
+.. code:: bash
 
-Basic.groove
-^^^^^^^^^^^^
+   mylib
+   Process()
+   Myprocess.local01()
+   Executing local01
 
-The `Basic.groove` algorithm is used to form a rhythmic backbone to the composition. The configuration here will look very similar to the `Basic.voices3` used in the earlier tutorial, but the algorithm is more sophisticated and general purpose.
+**Congratulations!!!** your new library and modules work.
 
-.. image:: images/Basic.groove.jpg
+It's not very interesting at the moment, but you have created a new algorithm. All you need to do now is fill in the missing code.
 
-The number of voices can be 3 or more. For this example I am using 4, which we can think of as **A**, **B**, **C** and **D** corresponding to their declaration position in the configuration list.
 
-Segments **A** and **B** are randomly selected from their inventory categories. These are then length-aligned. That is, whichever is the shorter of the two is padded with exactly the right amount of silence to make the frame lengths of both segments equal. These are then overlayed to form a composite rhythmic unit referred to as **AB**.
+Further expansions
+^^^^^^^^^^^^^^^^^^
 
-The basic rhythmic beat is created by replicating a sequence of these **AB** segments end-to-end until the track size limit is surpassed. This is the `groove_base`.
+The **generalg** utility is designed so that you can add new algorithms to existing processors:
 
-The `cycle` parameter specifies the number of these **AB** components tahe represent a higher level repetition unit called the `cycle` (obviously).
+.. code:: bash
 
-Subsequent voices are also length-aligned (or curtailed) to match the size of the **AB** unit. A new segment, `groove_layer` is created, into which the later voices **C**, **D**, etc. are injected in a cyclic sequence, aligned precisely to the `groove_base` cycles and beats.
+   generalg -L mylib -M myprocess -A local02
 
-Finally, the `groove_base` is overlayed with the `groove_layer` to create a composite whole track which is output as an audio file.
+Thus:
 
-Solo.multivoice_serial_ordered
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
 
-This algorithm, as its name should indicate, is just one possible approach amongst a whole forest of potential variants. As such it is provided merely as an exemplar and starting point for the user's own explorations into algorithmic creativity.
+   from GenerIter.process import Process
 
-Each of the voices in the configuration list is randomly selected from their inventory categories. At this point we have a fixed selection of solo voices for the rest of the track composition.
+   class Myprocess(Process):
 
-For each voice in sequence, the selected segment is padded with silence both front and back in a randomised non-uniform manner. The resulting segment is appended to the solo track and the sequence cycled until the track length exceeds its soft limit. This will be of the same order of magnitude as the limit used in the `Basic.groove` algorithm, but not identical or coupled in any way.
+       def __init__(self):
+           super().__init__()
+	   
+	   
+       def local01(self):
+	   print("Executing local01")
+           # Your code goes here
 
-The solos are then output as audio files, existing independently.
 
-Clearly, for an "s" sized track, setting 24 voices in the configuration is likely to result in a lot of redundant voicings that just never appear in the final track. Conversely, building an "xxl" solo out of just one or two voices will get very repetitive and uninteresting over time.
+       def local02(self):
+           print("Executing local02")
+           # Your code goes here
 
-Mix.multitrack
-^^^^^^^^^^^^^^
 
-This performs the same function it did in the earlier basic workflow tutorial, combining randomly selected tracks from the generated `Basic` and `Solo` populations and generating audio output files of the results. The level setting values are in dB, applied to the corresponding voice: the `Basic` voice is boosted by 12 dB, the `Solo` is muted by 3 dB. These values represent a reasonable median starting point, but they will undoubtedly need adjusting for your own sample library.
+Add new processor modules to your library:
+
+.. code:: bash
+
+   generalg -L mylib -M anotherprocess -A algorithm
+
+Or create a completely new library:
+
+.. code:: bash
+
+   generalg -L newlib -M anotherprocess -A algorithm
+
+
+**However** it is NOT sufficiently smart to prevent you adding a repeat copy of the same algorithm name to the same processor module:
+
+.. code:: bash
+
+   generalg -L newlib -M anotherprocess -A algorithm
+   generalg -L newlib -M anotherprocess -A algorithm
+
+Will create:
+
+.. code:: python
+
+   from GenerIter.process import Process
+
+   class Anotherprocess(Process):
+
+       def __init__(self):
+           super().__init__()
+	   
+	   
+       def algorithm(self):
+           print("Executing algorithm")
+           # Your code goes here
+	   
+	   
+       def algorithm(self):
+           print("Executing algorithm")
+           # Your code goes here
+
+Which will throw a fatal Python exception when you try to use it.
 

@@ -11,7 +11,7 @@ from GenerIter.util import debug
 
 class ProcessorFactory():
 
-    def __init__(self, vname, pname, fname, procmodule='GenerIter.processor'):
+    def __init__(self, vname, pname, fname, procmodule):
         self._vname = vname
         self._pname = pname
         self._method = None

@@ -7,6 +7,8 @@ Copyright 2020 Thomas Jackson Park & Jeremy Pavier
 """
 import os
 import argparse
+import sys
+from pathlib import Path
 
 from GenerIter.app.clibase import CLIBase
 from GenerIter.selector import Selector
@@ -29,13 +31,21 @@ class Generator(CLIBase):
                             action='append')
         parser.add_argument("-C", help="Configuration file for algorithms",
                             action='store', required=True)
+
+        parser.add_argument("-P", help="Processor module for local algorithms",
+                            action='store', default="GenerIter.processor")
         
         args = parser.parse_args()
         
         self._includes = args.I
         self._loads = args.L
-        #self._outfile = "{0}.wav".format(args.o)
         self._confname = args.C
+        self._pmodule = args.P
+        print(self._pmodule)
+        if self._pmodule != "GenerIter.processor":
+            lpath = str(Path(self._pmodule).resolve())
+            (spath, bname) = os.path.split(lpath)
+            sys.path.insert(0, spath)
 
     def loadSelections(self):
         self._selector = Selector()
@@ -96,7 +106,7 @@ class Generator(CLIBase):
                 debug(f"Voice : {voice}")
                 for processor in self._configuration[voice]:
                     debug(f"Processor : {processor}")
-                    factory = ProcessorFactory(voice, processor, self._configuration[voice][processor])
+                    factory = ProcessorFactory(voice, processor, self._configuration[voice][processor], self._pmodule)
                     factory.configure(invent=self._selector,
                                       config=self._configuration[voice][processor],
                                       dest=self._destination,
@@ -107,7 +117,7 @@ class Generator(CLIBase):
             for voice in self._voices:
                 if voice != "Globals":
                     for processor in self._configuration[voice]:
-                        factory = ProcessorFactory(voice, processor, self._configuration[voice][processor])
+                        factory = ProcessorFactory(voice, processor, self._configuration[voice][processor], self._pmodule)
                         factory.configure(invent=self._selector,
                                           config=self._configuration[voice][processor],
                                           dest=self._destination,

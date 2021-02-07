@@ -4,10 +4,26 @@ GenerIter.app package
 Submodules
 ----------
 
+GenerIter.app.algorithm module
+------------------------------
+
+.. automodule:: GenerIter.app.algorithm
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 GenerIter.app.categorise module
 -------------------------------
 
 .. automodule:: GenerIter.app.categorise
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GenerIter.app.clep\_algorithm module
+------------------------------------
+
+.. automodule:: GenerIter.app.clep_algorithm
    :members:
    :undoc-members:
    :show-inheritance:
