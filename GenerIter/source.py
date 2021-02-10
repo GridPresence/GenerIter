@@ -110,6 +110,8 @@ class Source():
 
 class WavSource(Source):
     """Derived class specialised for WAV source files.
+
+    WAV is the only currently supported format.
     """
     def __init__(self, dpath=None, dexist=False):
         """Instantiates as a Source file then validates the filename extension.
@@ -120,6 +122,8 @@ class WavSource(Source):
 
 class FlacSource(Source):
     """Derived class specialised for FLAC source files.
+
+    **This is a placeholder for future developments.**
     """
     def __init__(self, dpath=None, dexist=False):
         """Instantiates as a Source file then validates the filename extension.
@@ -130,6 +134,8 @@ class FlacSource(Source):
 
 class Mp3Source(Source):
     """Derived class specialised for MP3 source files.
+    
+    **This is a placeholder for future developments.**
     """
     def __init__(self, dpath=None, dexist=False):
         """Instantiates as a Source file then validates the filename extension.

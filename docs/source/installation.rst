@@ -131,7 +131,7 @@ Open Powershell, and run the following command:
 
 
 Advanced Installation Notes
-===========================
+---------------------------
 
 The **GenerIter** package uses `pydub <https://github.com/jiaaro/pydub/blob/master/API.markdown>`_, a dependency which should be satisfied during the package installation.
 
