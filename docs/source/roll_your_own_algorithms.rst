@@ -70,7 +70,7 @@ To test the new library module:
 
 .. code:: bash
 
-   generiter -I someinventoryfile.json -L test.json -P mylib
+   generiter -L someinventoryfile.json -C test.json -P mylib
 
 This should produce the following output:
 
