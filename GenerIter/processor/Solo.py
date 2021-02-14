@@ -124,3 +124,33 @@ class Solo(Process):
             # Write it out
             fname = inspect.currentframe().f_code.co_name
             self.write(algorithm=fname, counter=ctr, source=newAudio)
+
+
+    def multivoice_serial_ordered(self):
+        """ 
+        """
+        declick = 10
+        # How many times do you want this to run?
+        iterations = int(self._config["tracks"])
+        voices = self._config["voices"]
+        nvoices = len(voices)
+
+        for ctr in range(iterations):
+            audios = []
+            # Set a soft threshold for the size of the piece
+            size_limit = self.threshold()
+            solo_base = AudioSegment.empty()
+            # Randomly select our samples
+            for voice in voices:
+                samp = self._inventory.selectRandom(voice)
+                audio = self.getsegment(sample=samp, muted=0, fade=0)
+                audios.append(audio)
+
+            ctr2 = 0
+            while solo_base.duration_seconds < size_limit:
+                solo_base = solo_base + self.bracket(audios[ctr2 % nvoices])
+                ctr2 += 1
+
+            # Write it out
+            fname = inspect.currentframe().f_code.co_name
+            self.write(algorithm=fname, counter=ctr, source=solo_base)

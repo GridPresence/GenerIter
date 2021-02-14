@@ -106,6 +106,7 @@ class Selector():
         if retval is None:
             raise robox.RDJParameterErr("Unable to select a valid source for {0}".format(key))
         # Here's a result.
+        print("{0} : {1}".format(key, retval))
         return retval
 
     def search(self, spath=None):

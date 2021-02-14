@@ -1,8 +1,31 @@
 #!/usr/bin/env python3
 """
-Subcategorise a sample set according to a string search parameter.
+App that is used to subcategorise a sample set according to a string search parameter.
 
-Copyright 2020 Thomas Jackson Park & Jeremy Pavier
+The app will iterate through all the files in the current directory looking for files containing the category search pattern substring (the **-C** argument).
+       
+If the category search pattern is found in a filename, the file is moved into a subdirectory, which will be created if necessary. The 
+name of the subdirectory will either correspond to the category search string or is specified by the **-D** argument.
+
+Thus:
+
+    .. code:: bash
+
+       genercat -C Drums
+        
+and
+
+    .. code:: bash
+
+       genercat -C Drums -D Drums
+
+are functionally identical, whereas
+
+    .. code:: bash
+        
+       genercat -C Drums - D Percussion
+
+puts the same files into a different subdirectory.
 
 """
 import argparse
@@ -21,6 +44,18 @@ class Categorise(CLIBase):
 
 
     def parseArguments(self):
+        """Parses the CLI arguments for the app.
+
+        .. code:: bash
+
+           usage: genercat [-h] -C C [-D D]
+           
+           optional arguments:
+           -h, --help  show this help message and exit
+           -C C        Category search pattern
+           -D D        Destination category name
+
+        """
         # Set up positional and optional arguments
         parser = argparse.ArgumentParser()
         # This is the target string for the category
@@ -41,6 +76,16 @@ class Categorise(CLIBase):
 
 
     def process(self):
+        """The execution function for the app.
+
+        The basic flow:
+
+        #. A destination subdirectory is created, unless it already exists. 
+
+        #. The app then examines all the files in the current directory.
+        
+        #. If the specfied category search substring is found in the filename, that file is moved into the subdirectory.
+        """
         mkdir_p(self._dest)
         # define the path
         currentDirectory = pathlib.Path('.')
@@ -52,6 +97,3 @@ class Categorise(CLIBase):
                     print(target)
                     currentFile = currentFile.replace(target)
                     print(currentFile)
-
-#if __name__ == '__main__':
-#    app = Inventory()

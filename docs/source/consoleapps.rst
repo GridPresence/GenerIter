@@ -7,3 +7,4 @@ Console Apps
    genercat_cli   
    generinv_cli
    generiter_cli
+   generalg_cli
