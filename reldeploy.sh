@@ -3,6 +3,6 @@
 rm -fr dist
 rm -fr *.egg-info
 
-bumpversion release --allow-dirty --verbose
+bumpversion release --verbose
 python3 -m setup sdist bdist_wheel
 python3 -m twine upload --verbose --repository pypi dist/*
