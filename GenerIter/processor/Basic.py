@@ -275,7 +275,7 @@ class Basic(Process):
             # Randomly select our samples
             for voice in voices:
                 sample = self._inventory.selectRandom(voice)
-                audio = self.getsegment(sample, mute, declick)
+                audio = self.getsegmentm(sample, mute, declick)
                 audios.append(audio)
 
             for aud in range(2):

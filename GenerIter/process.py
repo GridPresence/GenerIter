@@ -71,13 +71,13 @@ class Process():
         segment = segment - diminish
         return segment
 
-    #def getsegment(self, sample, limits, fade):
-    #    retval = AudioSegment.from_wav(sample)
-    #    retval = self.deamplify(retval, limits)
-    #    retval = self.declick(retval, fade)
-    #    return retval
+    def getsegment(self, sample, limits, fade):
+        retval = AudioSegment.from_wav(sample)
+        retval = self.deamplify(retval, limits)
+        retval = self.declick(retval, fade)
+        return retval
 
-    def getsegment(self, sample, muted, fade):
+    def getsegmentm(self, sample, muted, fade):
         retval = AudioSegment.from_wav(sample)
         if muted > 0:
             retval = retval - muted
