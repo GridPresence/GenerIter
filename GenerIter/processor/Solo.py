@@ -143,7 +143,7 @@ class Solo(Process):
             # Randomly select our samples
             for voice in voices:
                 samp = self._inventory.selectRandom(voice)
-                audio = self.getsegment(sample=samp, muted=0, fade=0)
+                audio = self.getsegmentm(sample=samp, muted=0, fade=0)
                 audios.append(audio)
 
             ctr2 = 0
